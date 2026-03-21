@@ -3,66 +3,62 @@
 #include <windows.h>
 using namespace std;
 
-class aa{
+class ElevatorSystem {
     public:
-        int a,b,c;
-        a=b=c=0;
-        void bb(){
-            if (_kbhit()){
-                if(b<a)
-                {
-                    for(;b <= a;b++){
-                        cout << "电梯所在的楼层:" << b << endl;
+        int currentFloor, elevatorFloor, unused;
+        ElevatorSystem() : currentFloor(0), elevatorFloor(0), unused(0) {}
+        
+        void checkCall() {
+            if (_kbhit()) {
+                if(elevatorFloor < currentFloor) {
+                    for(; elevatorFloor <= currentFloor; elevatorFloor++) {
+                        cout << "Elevator floor: " << elevatorFloor << endl;
                         Sleep(500);
                     }
-                    cout << "到了" << endl;
-                }
-                else
-                {
-                    for(;b >= a;b--){
-                        cout << "电梯所在的楼层:" << b << endl;
+                    cout << "Arrived" << endl;
+                } else {
+                    for(; elevatorFloor >= currentFloor; elevatorFloor--) {
+                        cout << "Elevator floor: " << elevatorFloor << endl;
                         Sleep(500);
                     }
-                    cout << "到了" << endl;
+                    cout << "Arrived" << endl;
                 }
             }    
         }
-        void cc(){
-            cout << "你现在所在的楼层:" << a << " 请输入你要去的楼层" << endl;
-            cin >> a;
-            if(b<a)
-                {
-                    for(;b <= a;b++){
-                        cout << "电梯所在的楼层:" << b << endl;
-                        Sleep(500);
-                    }
-                    cout << "到了" << endl;
+        
+        void selectFloor() {
+            cout << "Current floor: " << currentFloor << " Enter target floor: " << endl;
+            cin >> currentFloor;
+            if(elevatorFloor < currentFloor) {
+                for(; elevatorFloor <= currentFloor; elevatorFloor++) {
+                    cout << "Elevator floor: " << elevatorFloor << endl;
+                    Sleep(500);
                 }
-                else
-                {
-                    for(;b >= a;b--){
-                        cout << "电梯所在的楼层:" << b << endl;
-                        Sleep(500);
-                    }
-                    cout << "到了" << endl;
+                cout << "Arrived" << endl;
+            } else {
+                for(; elevatorFloor >= currentFloor; elevatorFloor--) {
+                    cout << "Elevator floor: " << elevatorFloor << endl;
+                    Sleep(500);
                 }
+                cout << "Arrived" << endl;
+            }
         }
-        void dd(){
-            cout << "请输入初始楼层" << endl;
-            cin >> a;
-                for(;;){
+        
+        void start() {
+            cout << "Enter initial floor: " << endl;
+            cin >> currentFloor;
+            for(;;) {
                 system("cls");
-                cout << "你现在的楼层：" << a << " 按例任意键叫电梯" << endl;
-                bb();
+                cout << "Current floor: " << currentFloor << " Press any key to call elevator" << endl;
+                checkCall();
                 system("cls");
-                cc();
+                selectFloor();
             }
         }
 };
 
-int main()
-{
-    aa i;
-    i.dd();
+int main() {
+    ElevatorSystem elevator;
+    elevator.start();
     return 0;
 }
